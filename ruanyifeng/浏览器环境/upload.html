@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文件上传-原生</title>
+</head>
+<body>
+  <!-- enctype可选值: post请求，1. application/x-www-form-urlencoded 2. text/plain, 3.multipart/form-data  4. get请求 -->
+  <form id="file-form" action="handler.php" method="POST" enctype="multipart/form-data" onsubmit="return checkForm()">
+    <input type="file" id="file-select" name="photos[]" multiple/>
+    <button type="submit" id="upload-button">上传</button>
+  </form>
+  <script>
+
+    function checkForm() {
+      var fileSelect = document.getElementById('file-select');
+      var files = fileSelect.files;
+      var formData = new FormData();
+      for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        if (!file.type.match('image.*')) {
+          continue;
+        }
+        formData.append('photos[]', file, file.name);
+      }
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', 'handler.php', true);
+
+      xhr.onload = function () {
+        if (xhr.status !== 200) {
+          alert('An error occurred!');
+        }
+      };
+      console.log(formData.getAll("photos[]"));
+      xhr.send(formData);
+      return false;
+    }
+
+    
+
+  </script>
+</body>
+</html>

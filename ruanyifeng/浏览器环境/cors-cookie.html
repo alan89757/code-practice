@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>跨域设置浏览器自动带cookie</title>
+</head>
+<body>
+  <script>
+    var xhr = new XMLHttpRequest();
+    // xhr.isSecureContext = true;
+    xhr.withCredentials = true;
+    xhr.open('GET', 'http://172.18.25.15:3000/cors');
+    xhr.onload = function () {
+      if (xhr.status !== 200) {
+        alert('An error occurred!');
+      }
+    };
+    xhr.send(null);
+  </script>
+</body>
+</html>
