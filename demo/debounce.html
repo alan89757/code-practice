@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="text" id="debounce">
+  <script>
+    // 防抖，每个时间间隔内
+    var $input = document.getElementById("debounce");
+    $input.addEventListener("input", debounce(3000));  // 
+    function debounce(e) {
+      // console.log(e.target.value)
+      var timer = null;
+      var startTime = +new Date();
+      return function() {
+
+      }
+    }
+  </script>
+</body>
+</html>

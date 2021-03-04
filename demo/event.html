@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="./jquery-1.11.2.min.js"></script>
+</head>
+
+<body>
+  <script>
+    /*
+    // 2 3 1
+    setTimeout(function(){
+        console.log('1')
+    });
+    new Promise(function(resolve){
+        console.log('2');
+        for(var i = 0; i < 10000; i++){
+            i == 99 && resolve();
+        }
+    }).then(function(){
+        console.log('3')
+    }); 
+    */
+    /*
+    // 3 2
+    let data = [];
+    $.ajax({
+        url: "http://www.javascript.com",
+        data: data,
+        success:() => {
+          console.log('1');
+        },
+        error: ()=> {
+          console.log("2")
+        }
+    });
+    console.log('3');
+    */
+    /*
+    // 2 4 1 ps: 没有resolve
+    setTimeout(function() {
+      console.log('1');
+    })
+
+    new Promise(function(resolve) {
+      console.log('2');
+    }).then(function() {
+      console.log('3');
+    })
+    console.log('4');
+    */
+    /*
+    // 1 4 5 2 3 6
+     console.log(1);
+     setTimeout(() => {
+       console.log(2);
+       Promise.resolve().then(() => {
+         console.log(3);
+       });
+     }, 0);
+     new Promise((resolve, reject) => {
+       console.log(4);
+       resolve(5);
+     }).then((data) => {
+       console.log(data);
+     });
+     setTimeout(() => {
+       console.log(6);
+     }, 0);
+     */
+    /*
+    // 2 4 3 1
+    setTimeout(function () {
+      console.log('1')
+    });
+    new Promise(function (resolve) {
+      console.log('2');
+      resolve();
+    }).then(function () {
+      console.log('3')
+    });
+    console.log('4');
+    */
+
+    /*
+    // 1 3 6 4 2 5
+    // 1 3 6是同步  4 全局微任务  2 async1微任务 5 宏任务
+    async function async1() {
+      console.log(1);
+      const result = await async2();  // new Promise(function() { console.log(3); }).then(function(){console.log(2)})
+      console.log(2);
+    }
+    async function async2() {
+      console.log(3);
+    }
+    Promise.resolve().then(() => {  // resolve不是微任务，属于同步任务
+      console.log(4);
+    });
+    setTimeout(() => {
+      console.log(5);
+    });
+    async1();
+    console.log(6);
+    */
+   /*
+   // 2 4 1 5 6 7 1 9 10 3 1 8 1
+   // 多个宏任务看入队列的数顺序，先执行先入队列的宏任务下的微任务，执行完成在执行下一个宏任务下的微任务
+    function sleep(time) {  // sleep是同步的
+      let startTime = new Date()
+      while (new Date() - startTime < time) {}
+      console.log('1')
+    }
+    setTimeout(() => {
+      console.log('2')
+      setTimeout(() => {
+        console.log('3')
+        sleep(1000)
+      })
+      new Promise(resolve => {
+        console.log('4')
+        resolve()
+      }).then(() => {
+        console.log('5');
+        new Promise(resolve => resolve()).then(() => {
+          console.log('6');
+        })
+      })
+      sleep(1000)
+    })
+    setTimeout(() => {
+      console.log('7')
+      setTimeout(() => {
+        console.log('8')
+        sleep(1000)
+      })
+      new Promise(resolve => resolve()).then(() => {
+        console.log('9')
+        new Promise(resolve => resolve()).then(() => {
+          console.log('10')
+        })
+      })
+      sleep(1000)
+    });
+    */
+   
+  </script>
+</body>
+
+</html>
