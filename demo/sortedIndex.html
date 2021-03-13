@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function cb(callback, context) {
+      return function() {
+        return callback.apply(context || null, arguments)
+      }
+    }
+    function sortedIndex(array, insert, iterate, context) {
+      // 处理回调，主要是参数和this指向
+      iterate = cb(iterate, context)
+      var low = 0; hight = array.length;
+      while(low < hight) {
+        mid = Math.floor((low + hight)/2);
+        if(iterate(array[mid]) < iterate(insert)) {  
+          low = mid + 1;   // 说明insert位置还在右边
+        } else {
+          hight = mid;  // 说明insert位置还在左边
+        }
+      }
+      return hight;
+    }
+    // console.log(sortedIndex([10, 20, 30, 40, 50], 35)) // 3
+    
+    // stooges 配角 比如 三个臭皮匠 The Three Stooges
+    var stooges = [{name: 'stooge1', age: 10}, {name: 'stooge2', age: 30}];
+
+    var result = sortedIndex(stooges, {name: 'stooge3', age: 20}, function(stooge){
+      console.log(stooge);
+      return stooge.age
+    });
+
+    console.log(result)
+  </script>
+</body>
+</html>
