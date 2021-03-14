@@ -6,12 +6,18 @@
   <title>Document</title>
   <script src="./react.development.js"></script>
   <script src="./react-dom.development.js"></script>
+  <script src="./react-router.js"></script>
 </head>
 <body>
   <div id="app"></div>
   <script>
+    console.log(React);
+    console.log(ReactDOM);
+    console.log(ReactRouter);
     var dom = document.getElementById("app");
-    console.log(React)
+    
+    const App = "<div>123</div>";
+    ReactDOM.render(App, dom);
   </script>
 </body>
 </html>
