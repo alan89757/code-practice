@@ -5,8 +5,10 @@
 https://javascript.ruanyifeng.com/
 ./ruanyifeng/浏览器环境
 
-## http://whatsns.aidianzan.com/index.php?article-15035.html
-./demo/event.html  // 事件循环
+## 事件循环
+http://whatsns.aidianzan.com/index.php?article-15035.html
+./demo/event.html 
 
-## https://www.ruanyifeng.com/blog/2015/07/flex-examples.html
-./demo/flex.html  // flex布局
+## flex布局
+https://www.ruanyifeng.com/blog/2015/07/flex-examples.html
+./demo/flex.html
