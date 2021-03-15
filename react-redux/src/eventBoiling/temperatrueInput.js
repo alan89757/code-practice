@@ -1,5 +1,7 @@
 
 import React, { Component } from 'react';
+import { connect } from "react-redux";
+import { tempChangeCreator } from "../redux/index";
 
 const scaleNames = {
     c: 'Celsius',
@@ -7,13 +9,32 @@ const scaleNames = {
 };
 
 class TemperatureInput extends Component {
+    constructor(props) {
+      super(props);
+      this.hanleChange = this.hanleChange.bind(this);
+    }
+    hanleChange(e) {
+      let celsius;
+      if(this.props.scale === "f") {
+        celsius = tryConvert(e.target.value, toCelsius);
+      } else {
+        celsius = e.target.value;
+      }
+      // const celsius = this.props.scale === "f" ? tryConvert(e.target.value, toCelsius) : e.target.value;
+      this.props.tempChangeCreator({
+        scale: this.props.scale, celsius: celsius
+      });
+    }
     render() {
         const scale = this.props.scale;
+        const temperature = this.props.temperature;
         return (
-            <fieldset>
-                <legend>Enter temperature in {scaleNames[scale]}:</legend>
-                <input />
-            </fieldset>
+          <fieldset>
+            <legend>Enter temperature in {scaleNames[scale]}:</legend>
+            <input 
+            value={temperature}
+            onChange={this.hanleChange}/>
+          </fieldset>
         );
     }
 }
@@ -38,5 +59,24 @@ function tryConvert(temperature, convert) {
     const rounded = Math.round(output * 1000) / 1000;
     return rounded.toString();
 }
+
+const mapStateToProps = (state, ownProps) => {
+  // console.log(ownProps);
+  // console.log(state);
+  if(ownProps.scale !== state.scale) {
+    let tempObj = {temperature : ""}
+      ownProps.scale === "c" ? tempObj = {
+          temperature: state.celsius
+      } : tempObj = {
+          temperature: tryConvert(state.celsius, toFahrenheit)
+      };
+      return tempObj
+  }
+}
+
+const actionCreater = { tempChangeCreator };
+
+//把state加到props
+TemperatureInput = connect(mapStateToProps, actionCreater)(TemperatureInput);
 
 export default TemperatureInput

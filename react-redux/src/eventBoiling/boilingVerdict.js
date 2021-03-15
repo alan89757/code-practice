@@ -3,12 +3,31 @@
  */
 
 import React from 'react';
+import { connect } from "react-redux";
+import { tempChangeCreator } from "../redux/index";
 
-const isboil = "not";
+// const isboil = "not";
 class BoilingVerdict extends React.Component {
     render() {
-        return <p>The water { isboil } boil.</p>;
+        return <p>The water { this.props.isboil } boil.</p>;
     }
 }
+
+function toCelsius(fahrenheit) {
+    return (fahrenheit - 32) * 5 / 9;
+}
+
+const mapStateToProps = (state, ownProps)=> {
+    if(state.celsius >=100) {
+        return {isboil: "would"}
+    } else {
+        return {isboil: "not"}
+    }
+    
+}
+
+const actionCreater = { tempChangeCreator };
+
+BoilingVerdict = connect(mapStateToProps, actionCreater)(BoilingVerdict);
 
 export default BoilingVerdict;
