@@ -4,7 +4,7 @@
 
 import React from 'react';
 import { connect } from "react-redux";
-import { tempChangeCreator } from "../redux/index";
+import { tempChangeAction } from "../redux/index";
 
 // const isboil = "not";
 class BoilingVerdict extends React.Component {
@@ -26,7 +26,7 @@ const mapStateToProps = (state, ownProps)=> {
     
 }
 
-const actionCreater = { tempChangeCreator };
+const actionCreater = { tempChangeAction };
 
 BoilingVerdict = connect(mapStateToProps, actionCreater)(BoilingVerdict);
 

@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
-import { connect } from "react-redux";
-import { tempChangeCreator } from "../redux/index";
+import { connect } from "../react-redux/index";
+import { tempChangeAction } from "../redux/index";
 
 const scaleNames = {
     c: 'Celsius',
@@ -21,7 +21,7 @@ class TemperatureInput extends Component {
         celsius = e.target.value;
       }
       // const celsius = this.props.scale === "f" ? tryConvert(e.target.value, toCelsius) : e.target.value;
-      this.props.tempChangeCreator({
+      this.props.tempChangeAction({
         scale: this.props.scale, celsius: celsius
       });
     }
@@ -61,9 +61,7 @@ function tryConvert(temperature, convert) {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  // console.log(ownProps);
-  // console.log(state);
-  if(ownProps.scale !== state.scale) {
+  if(state && ownProps && ownProps.scale !== state.scale) {
     let tempObj = {temperature : ""}
       ownProps.scale === "c" ? tempObj = {
           temperature: state.celsius
@@ -74,7 +72,7 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-const actionCreater = { tempChangeCreator };
+const actionCreater = { tempChangeAction };
 
 //把state加到props
 TemperatureInput = connect(mapStateToProps, actionCreater)(TemperatureInput);

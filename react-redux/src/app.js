@@ -10,7 +10,7 @@ class App extends Component {
     return <>
       <TemperatrueInput scale="c"/>
       <TemperatrueInput scale="f"/>
-      <BoilingVerdict />
+      {/* <BoilingVerdict /> */}
     </>
   }
 }

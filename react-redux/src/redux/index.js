@@ -1,6 +1,7 @@
 
 const TEMP_CHANGE = 'tempChange';
-// reducer
+
+// reducer， 返回state数据
 export function tempChange(state="", action) {
   switch (action.type) {
     case TEMP_CHANGE:
@@ -11,9 +12,10 @@ export function tempChange(state="", action) {
 }
 
 // action
-export function tempChangeCreator(data) {
+export function tempChangeAction(data) {
   return {
     type: TEMP_CHANGE,
     data
   }
 }
+
