@@ -74,9 +74,10 @@ const btn1 = new LikeButton();
 wrapper.appendChild(btn1.render());
 */
 
+
+/*
 // 组件化，组件抽离，通过重新渲染dom的方式，而不是操作dom，这就是虚拟dom做的事情
 // 重新渲染组件，消除了手动的 DOM 操作。
-
 const createDOMFromString = (domstring)=> {
   const div = document.createElement("div");
   div.innerHTML = domstring;
@@ -118,4 +119,66 @@ likeButton.onStateChange = function(oldEle, newEle) {
   wrapper.insertBefore(newEle, oldEle);
   wrapper.removeChild(oldEle);
 };
+*/
 
+// 抽离公共组件，类似基础类
+const createDOMFromString = (domstring)=> {
+  const div = document.createElement("div");
+  div.innerHTML = domstring;
+  return div;
+}
+
+class Component {
+  constructor(props) {
+    this.props = props;
+  }
+  // 状态更新
+  setState(state) {
+    const oldEle = this.el;
+    this.state = state;
+    this._renderDOM();   // 走自己的render
+    if(this.onStateChange) this.onStateChange(oldEle, this.el);  // 手动更新dom
+  }
+  _renderDOM() {
+    this.el = createDOMFromString(this.render());  // render子组件必须实现
+    // 事件绑定
+    if(this.onClick) {
+      this.el.addEventListener("click", this.onClick.bind(this), false);
+    }
+    return this.el;
+  }
+}
+
+// 加载组件和重新渲染
+const mount = (component, wrapper)=> {
+  wrapper.appendChild(component._renderDOM());
+  component.onStateChange = (oldEl, newEl)=> {
+    // console.log("oldEl___", oldEl);
+    // console.log("newEl___", newEl);
+    wrapper.insertBefore(newEl, oldEl);
+    wrapper.removeChild(oldEl);
+  }
+}
+
+class LikeButton extends Component {
+  constructor(props) {
+    super(props);  // 返回实例
+    this.state = { isLiked: false};
+  }
+  onClick() {
+    this.setState({
+      isLiked: !this.state.isLiked
+    })
+  }
+  render() {
+    return `
+      <button class='like-btn' style="background-color: ${this.props.bgColor}">
+        <span class='like-text'>${this.state.isLiked ? '取消' : '点赞'}</span>
+        <span>👍</span>
+      </button>
+    `
+  }
+}
+
+const wrapper = document.querySelector(".wrapper");
+mount(new LikeButton({ bgColor: 'red' }), wrapper);
