@@ -1,0 +1,16 @@
+{
+  "name": "alan-webpack-plugin",
+  "version": "1.0.1",
+  "description": "数组和字符串查找",
+  "main": "./src/index.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "keywords": ["webpack"],
+  "author": "alan",
+  "license": "MIT",
+  "devDependencies": {
+    "webpack": "^4.46.0",
+    "webpack-cli": "^4.6.0"
+  }
+}
