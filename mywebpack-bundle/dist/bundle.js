@@ -101,7 +101,7 @@ const {
 } = __webpack_require__("./src/string.js");
 
 const unique = array.unique;
-console.log(indexOf([1, 2, 3, 4, 5], 3));`);
+console.log("this is loader3");`);
 
 }),
 
