@@ -26,3 +26,9 @@ https://www.bookstack.cn/read/react-naive-book/9cfefd1fd29b75f6.md
 
 ## 从0开始搭建项目
 ./webpack0326  
+
+## 自定义webpack loader
+./webpack-loader-demo
+
+## 使用自定义的webpack， bundle打包
+./mywebpack-bundle
