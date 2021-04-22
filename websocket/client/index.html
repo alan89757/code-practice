@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>websocket心跳检测</title>
+</head>
+<body>
+  <script>
+    var wsUrl = "ws://localhost:8080/headcheck";
+    var ws;
+    var count = 0;
+    var timer = null;
+    var lockReconnect = false; // 避免重复连接
+
+    function createWebSocket(wsUrl) {
+      try {
+        ws = new WebSocket(wsUrl);
+        init();
+      } catch (e) {
+        console.log("失败重连...");
+        reconnect(wsUrl);
+      }
+    }
+
+    function init() {
+      ws.onclose = function() {
+        console.log("ws连接关闭，重连中...");
+        reconnect(wsUrl);
+      }
+      ws.onerror = function() {
+        console.log("ws发生异常，重连中...");
+        reconnect(wsUrl);
+      }
+      ws.onopen = function() {
+        // 心跳检测
+        heartCheck.start();
+      }
+      ws.onmessage = function(e) {
+        console.log("接收到消息...", e.data);
+        heartCheck.start();
+      }
+    }
+
+    // 失败重连
+    function reconnect(url) {
+      if(lockReconnect) {
+        return ;
+      }
+      lockReconnect = true;
+      // 避免一直重连
+      timer && clearTimeout(timer);
+      timer = setTimeout(function() {
+        createWebSocket(url);
+        lockReconnect = false;
+      }, 3000);
+    }
+
+    var heartCheck = {
+      timeout: 3000,
+      heartTimer: null,
+      serverTimer: null,
+      start: function() {
+        var self = this;
+        console.log("ws连接开始...");
+        self.heartTimer && clearTimeout(self.heartTimer);
+        self.serverTimer = setTimeout(() => {
+          // 发送心跳检测
+          ws.send(`Client HeartBeat Test Message...${++count}`);
+          // 3s后关闭连接
+          self.heartTimer = setTimeout(function(){
+            ws.close();
+          }, self.timeout)
+        }, this.timeout);
+        
+      }
+    }
+
+    createWebSocket(wsUrl);
+
+  </script>
+
+</body>
+</html>
